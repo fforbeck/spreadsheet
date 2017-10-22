@@ -1,0 +1,30 @@
+group 'com.fforbeck'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin:'application'
+
+sourceCompatibility = 1.8
+
+if (!JavaVersion.current().java8Compatible) {
+    throw new IllegalStateException('Must be built with Java 8 or higher')
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+compileJava.options.compilerArgs \
+        << '-Xlint:unchecked' << '-Xlint:deprecation'
+
+run {
+    doFirst {
+        standardInput = System.in
+    }
+}
+
+mainClassName = "com.fforbeck.spreadsheet.application.init.Solver"
