@@ -9,21 +9,19 @@ public class RowGen implements IdGenerator<String> {
 
     private final int maxRows;
     private final int maxColumns;
-    private final AtomicInteger currentRow;
     private final AtomicInteger currentColumn;
     private final Iterator<String> rowsIterator;
     private final Integer asciiCharADec = 65;
     private Optional<String> lastRow;
 
-    public RowGen(int maxRows, int maxColumns) {
+    public RowGen(int maxRows, int maxColumns, int maxRowsAllowed) {
         this.maxRows = maxRows;
         this.maxColumns = maxColumns;
-        this.currentRow = new AtomicInteger(1);
         this.currentColumn = new AtomicInteger(0);
         this.rowsIterator = Stream
                 .iterate(asciiCharADec, i -> i + 1)
                 .map(i -> String.valueOf((char) i.intValue()))
-                .limit(maxRows * maxColumns)
+                .limit(maxRowsAllowed)
                 .iterator();
         this.lastRow = Optional.empty();
     }
@@ -32,17 +30,10 @@ public class RowGen implements IdGenerator<String> {
     public String next() {
         if (!lastRow.isPresent()) {
             this.lastRow = Optional.of(rowsIterator.next());
-        } else if (currentColumn.get() % maxColumns == 0) {
-            this.currentRow.incrementAndGet();
-        }
-
-        this.currentColumn.incrementAndGet();
-
-        if (currentRow.get() % maxRows == 0 && maxRows > 1) {
+        } else if (currentColumn.get() % maxColumns == 0 && maxRows > 1) {
             this.lastRow = Optional.of(rowsIterator.next());
-            this.currentRow.incrementAndGet();
         }
-
+        this.currentColumn.incrementAndGet();
         return String.valueOf(lastRow.get());
     }
 

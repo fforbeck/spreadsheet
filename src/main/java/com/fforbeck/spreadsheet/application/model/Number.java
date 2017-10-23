@@ -15,4 +15,8 @@ public class Number extends Value {
         return Optional.of(value.toString());
     }
 
+    @Override
+    public String toString() {
+        return String.format("%.5f", value);
+    }
 }

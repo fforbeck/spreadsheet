@@ -7,14 +7,13 @@ import java.io.*;
 public class Solver {
 
     public static void main(String... args) throws IOException {
-        int maxColumns, maxRows, maxLinesAllowed = 26;
+        int maxColumns, maxRows, maxRowsAllowed = 26;
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
             maxColumns = Integer.valueOf(in.readLine());
             maxRows = Integer.valueOf(in.readLine());
-            SpreadsheetCache.INSTANCE.create(maxColumns, maxRows,
-                    in.lines().limit(Math.min(maxColumns * maxRows, maxLinesAllowed)));
-            //System.out.println(SpreadsheetHolder.INSTANCE.print());
+            SpreadsheetCache.INSTANCE.create(maxColumns, maxRows, maxRowsAllowed, in.lines());
+            //System.out.println(SpreadsheetCache.INSTANCE.print());
         }
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))) {

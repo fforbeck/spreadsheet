@@ -19,8 +19,8 @@ public enum SpreadsheetCache {
         this.dependencies = new HashSet<>();
     }
 
-    public void create(int maxColumns, int maxRows, Stream<String> content) {
-        final IdGenerator<String> rowIdGen = new RowGen(maxRows, maxColumns);
+    public void create(int maxColumns, int maxRows, int maxRowsAllowed, Stream<String> content) {
+        final IdGenerator<String> rowIdGen = new RowGen(maxRows, maxColumns, maxRowsAllowed);
         final IdGenerator<Integer> columnIdGen = new ColumnGen(maxColumns);
         this.spreadsheet = new Spreadsheet(content
                         .map(line -> getCellContent(rowIdGen.next(), columnIdGen.next(), line))

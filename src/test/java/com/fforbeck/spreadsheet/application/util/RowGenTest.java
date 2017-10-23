@@ -12,7 +12,7 @@ public class RowGenTest {
 
     @Test
     public void shouldReturnRowIdWithSuccessBasedOnMaxRowsAndColumns() {
-        RowGen rowGen = new RowGen(2, 2);
+        RowGen rowGen = new RowGen(2, 2, 2);
         Assert.assertEquals("A", rowGen.next());
         Assert.assertEquals("A", rowGen.next());
         Assert.assertEquals("B", rowGen.next());
@@ -21,13 +21,13 @@ public class RowGenTest {
 
     @Test
     public void shouldReturnRowIdWithSuccessWhenTheSmallestDimensionIsProvided() {
-        RowGen rowGen = new RowGen(1, 1);
+        RowGen rowGen = new RowGen(1, 1, 1);
         Assert.assertEquals("A", rowGen.next());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void shouldReturnRowIdWithSuccessWhenInvalidDimensionIsProvided() {
-        new RowGen(0, 0).next();
+        new RowGen(0, 0, 0).next();
     }
 
 }
